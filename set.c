@@ -1,6 +1,7 @@
 #include "set.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "math.h"
 
 t_d_cell* createEmptyCell(int value, int nLevels){
     t_d_cell* cell = (t_d_cell*)malloc(sizeof(t_d_cell));
@@ -11,40 +12,43 @@ t_d_cell* createEmptyCell(int value, int nLevels){
 
 t_d_list createEmptyList(int max_level){
     t_d_list list;
+    list.nElement = 0;
     list.max_level = max_level;
     list.heads = (t_d_cell**)calloc(max_level, sizeof(t_d_cell*));
-
-    int n = 1;
-    for(int i = 0; i<max_level; i++) n*=2;
-    list.nLevelArray = calloc(n-1, sizeof(int));
-    for(int i = 0; i<n-1; i++){
-        for(int j = 2; j<n/2+1; j += j){
-            if((i+1)%j==0){
-                list.nLevelArray[i] += 1;
-            }
-        }
-    }
-    list.n = n;
-    printf("\n");
     return list;
+}
+
+void setPointer(t_d_cell *pCell, t_d_list *pList, int i) {
+    if(i == 0) return;
+    t_d_cell *destinationPtr;
+    for(int h = 1; h <= pList->max_level; h++){
+        destinationPtr = pCell;
+        int nTravel = (int)pow(2,h);
+        if(i % nTravel == 0){
+            for(int g = 0; g < nTravel; g++){
+                if(destinationPtr == NULL) break;
+                destinationPtr = destinationPtr->nexts[0];
+            }
+            pCell->nexts[h] = destinationPtr;
+            pList->heads[h] = pCell;
+        }else return;
+    }
 }
 
 //Insert a cell with levels at the beginning (head) of the list (be careful to take into account the number of levels in the cell)
 void insertHead(t_d_list *list, t_d_cell *cell){
     cell->nexts[0] = list->heads[0];
     list->heads[0] = cell;
-    if(list->nLevelArray[list->n-list->nElement] != 1){
-        for(int i = 1; i < list->nLevelArray[list->n-list->nElement]; i++);
-        
-    }
+
+    setPointer(cell, list, list->nElement-1);
 
 }
 
+
+
 void insert(t_d_list *list, int value){
-    t_d_cell* ptr = createEmptyCell(value, list->max_level);
-    t_d_cell* ptrNext = list->heads[0];
-    t_d_cell* ptrBefore = ptrNext;
     list->nElement++;
+    t_d_cell* ptr = createEmptyCell(value, list->max_level);
     if(list->heads[0] == NULL){
         insertHead(list, ptr);
         return;
@@ -53,6 +57,9 @@ void insert(t_d_list *list, int value){
         insertHead(list, ptr);
         return;
     }
+
+    t_d_cell* ptrNext = list->heads[0];
+    t_d_cell* ptrBefore = ptrNext;
     while(value > ptrNext->value && ptrNext->nexts[0] != NULL){
         ptrBefore = ptrNext;
         ptrNext = ptrNext->nexts[0];
@@ -66,20 +73,48 @@ void insert(t_d_list *list, int value){
     ptrBefore->nexts[0] = ptr;
 }
 
-void setLevel(t_d_list* list){
-    t_d_cell * ptrArr[list->nElement];
-    t_d_cell * ptr = list->heads[0];
-    for(int i = 0; i < list->nElement; i++){
-        ptrArr[i] = &*ptr;
-        ptr = ptr->nexts[0];
+int simpleSearch(t_d_list list, int val){
+    t_d_cell* currentPtr = list.heads[0];
+    int n = 0;
+    while(n<list.nElement){
+        if(currentPtr == NULL) break;
+        if(currentPtr->value == val) return n;
+        currentPtr = currentPtr->nexts[0];
+        n++;
     }
-    int m = 2;
-    for(int l = 1; l<list->max_level; l++){
-        if(m < list->nElement) list->heads[l] = ptrArr[m];
-        else list->heads[l] = ptrArr[list->nElement];
-        for(int h = 1; h<list->nElement; h+=m){
-            ptrArr[h-1]->nexts[l] = &*ptrArr[h-1+m];
+    return -1;
+}
+
+int levelSearch(t_d_list list, int val){
+    if(val<list.heads[0]->value) return -1;
+
+    int searchLvl = list.max_level-1;
+    t_d_cell *searchCursor = list.heads[searchLvl];
+    t_d_cell *precedentCursor = NULL;
+    for(int i = searchLvl; i>=0; i--){
+        if(val<searchCursor->value){
+            searchCursor = list.heads[--searchLvl];
         }
-        m*=2;
     }
+    while(val>searchCursor->value){
+        if(searchCursor->nexts[searchLvl] != NULL) {
+            precedentCursor = searchCursor;
+            searchCursor = searchCursor->nexts[searchLvl];
+        }
+        else{
+            while(searchCursor->nexts[searchLvl] == NULL){
+                searchLvl--;
+                if(searchLvl == -1) return -1;
+            }
+            searchCursor = searchCursor->nexts[searchLvl];
+        }
+
+        while(val<searchCursor->value){
+            searchLvl--;
+            if(searchLvl == -1) return -1;
+            searchCursor = precedentCursor->nexts[searchLvl];
+            }
+    }
+//    if(searchCursor->value == val) return 1;
+    return -1;
 }

@@ -3,4 +3,9 @@ project(ProjectL2 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(ProjectL2 main.c set.c set.h)
+add_executable(ProjectL2 main.c set.c set.h
+        timer.c
+        TimeTest.c
+        TimeTest.h
+        contact.c
+        contact.h)

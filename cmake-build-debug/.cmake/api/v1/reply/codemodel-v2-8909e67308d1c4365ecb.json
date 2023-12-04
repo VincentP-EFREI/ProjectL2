@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "ProjectL2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-ProjectL2-Debug-2840921b594044beed5f.json",
+					"jsonFile" : "target-ProjectL2-Debug-d8053c8b45e48953b2e7.json",
 					"name" : "ProjectL2",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/macke/CLionProjects/ProjectL2/cmake-build-debug",
-		"source" : "C:/Users/macke/CLionProjects/ProjectL2"
+		"build" : "C:/Users/macke/Documents/GitHub/ProjectL2/cmake-build-debug",
+		"source" : "C:/Users/macke/Documents/GitHub/ProjectL2"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 5
 	}
 }
