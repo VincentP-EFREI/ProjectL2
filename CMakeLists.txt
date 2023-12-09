@@ -3,9 +3,15 @@ project(ProjectL2 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(ProjectL2 main.c set.c set.h
-        timer.c
-        TimeTest.c
-        TimeTest.h
+include_directories(.)
+
+add_executable(ProjectL2
         contact.c
-        contact.h)
+        contact.h
+        main.c
+        set.c
+        set.h
+        timer.c
+        timer.h
+        TimeTest.c
+        TimeTest.h)

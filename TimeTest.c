@@ -5,23 +5,25 @@
 
 void TimeTest(int maxLevel, int valNumber){
     LARGE_INTEGER InsertStart, InsertEnd, frequencyInsert;
-    QueryPerformanceFrequency(&frequencyInsert);
 
-    QueryPerformanceCounter(&InsertStart);
 
     t_d_list testList = createEmptyList(maxLevel);
     for(int num = valNumber; num>0; num--){
         insert(&testList, num);
     }
 
+
+
+    QueryPerformanceFrequency(&frequencyInsert);
+
+    QueryPerformanceCounter(&InsertStart);
+    for(int maxVal = ; maxVal<=10000; maxVal+=1){
+        int randVal = rand();
+        saveTimedSimpleSearch(testList, randVal);
+        saveTimedLevelSearch(testList, randVal);
     QueryPerformanceCounter(&InsertEnd);
-    printf("Insert time, %f s\n", (double)(InsertEnd.QuadPart - InsertStart.QuadPart) / frequencyInsert.QuadPart);
-
-
-    for(int maxVal = 1000; maxVal<=valNumber; maxVal+=1000){
-        saveTimedSimpleSearch(testList, maxVal);
-//        saveTimedLevelSearch(testList, maxVal);
-        printf("\n");
+    printf("search time, %f s\n", (double)(InsertEnd.QuadPart - InsertStart.QuadPart) / frequencyInsert.QuadPart);
+    printf("\n");
     }
 }
 
@@ -36,7 +38,7 @@ void saveTimedSimpleSearch(t_d_list testList, int valNumber){
     double elapsed;
 
     QueryPerformanceCounter(&startAll);
-    for(int testVal = 1; testVal<=valNumber; testVal++){
+    for(int testVal = valNumber; testVal<=valNumber; testVal++){
         QueryPerformanceCounter(&start);
         simpleSearch(testList, testVal);
         QueryPerformanceCounter(&end);
@@ -61,16 +63,16 @@ void saveTimedLevelSearch(t_d_list testList, int valNumber){
     double elapsed;
 
     QueryPerformanceCounter(&startAll);
-    for(int testVal = 1; testVal<=valNumber; testVal++){
+    for(int testVal = valNumber; testVal<=valNumber; testVal++){
         QueryPerformanceCounter(&start);
         levelSearch(testList, testVal);
         QueryPerformanceCounter(&end);
         elapsed = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
-        fprintf(fpt,"%f\n", 1000*elapsed);
+//        fprintf(fpt,"%f\n", 1000*elapsed);
     }
     QueryPerformanceCounter(&endAll);
-//    printf(" Level Search for %d, %f s\n", valNumber, (double)(endAll.QuadPart - startAll.QuadPart) / frequency.QuadPart);
-    printf("%f\n", (double)(endAll.QuadPart - startAll.QuadPart) / frequency.QuadPart);
+    printf(" Level Search for %d, %f s\n", valNumber, (double)(endAll.QuadPart - startAll.QuadPart) / frequency.QuadPart);
+//    printf("%f\n", (double)(endAll.QuadPart - startAll.QuadPart) / frequency.QuadPart);
 
     fclose(fpt);
 }

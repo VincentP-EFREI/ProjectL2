@@ -79,6 +79,7 @@ int simpleSearch(t_d_list list, int val){
     while(n<list.nElement){
         if(currentPtr == NULL) break;
         if(currentPtr->value == val) return n;
+        if(currentPtr->value > val) return -1;
         currentPtr = currentPtr->nexts[0];
         n++;
     }
@@ -115,6 +116,24 @@ int levelSearch(t_d_list list, int val){
             searchCursor = precedentCursor->nexts[searchLvl];
             }
     }
-//    if(searchCursor->value == val) return 1;
+    if(searchCursor->value == val) return 1;
     return -1;
+}
+
+void displayList(t_d_list list){
+        for(int g = 0; g<list.max_level; g++){
+            t_d_cell* ptrTest = list.heads[g];
+            printf("[list head_%d @-]", g);
+            while(ptrTest != NULL){
+                printf("-->[ %d|@-]", ptrTest->value);
+                if(ptrTest->nexts[g] != NULL){
+                    for(int space = 0; space<2*g-1; space++){
+                        printf("----------");
+                    }
+                }
+                ptrTest = ptrTest->nexts[g];
+            }
+            printf("-->NULL");
+            printf("\n");
+    }
 }

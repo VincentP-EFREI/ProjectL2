@@ -20,5 +20,6 @@ t_d_cell* createEmptyCell(int value, int nLevels);
 void insert(t_d_list *list, int value);
 int simpleSearch(t_d_list list, int val);
 int levelSearch(t_d_list list, int val);
+void displayList(t_d_list list);
 
 #endif //PROJECTL2_SET_H

@@ -6,21 +6,13 @@
 
 int main() {
 
-    TimeTest(1,25000);
+    TimeTest(20,2000000);
 
-//    t_d_list tentTestList = createEmptyList(6);
-//    for(int num = 50; num>0; num--){
+//    t_d_list tentTestList = createEmptyList(3);
+//    for(int num = 9; num>0; num--){
 //        insert(&tentTestList, num);
 //    }
-//
-//    for(int g = 0; g<tentTestList.max_level; g++){
-//        t_d_cell* ptrTest = tentTestList.heads[g];
-//        while(ptrTest != NULL){
-//            printf("%d ", ptrTest->value);
-//            ptrTest = ptrTest->nexts[g];
-//        }
-//        printf("\n\n");
-//    }
+//    displayList(tentTestList);
 
 
 
