@@ -1,7 +1,3 @@
-//
-// Created by macke on 03/12/2023.
-//
-
 #ifndef PROJECTL2_CONTACT_H
 #define PROJECTL2_CONTACT_H
 
@@ -20,16 +16,16 @@ typedef struct s_appointment
     char *purpose;
     t_time time;
     t_duration duration;
-    struct t_appointement *next;
+    struct s_appointement *next;
 }t_appointement;
 
 typedef struct s_contact
 {
     char *surname;
     char *firstname;
-    t_appointement *appointement;
+    t_appointement **appointement;
     int appointementNumber;
-    struct t_contact *nexts;
+    struct s_contact **nexts;
 } t_contact;
 
 typedef struct s_contact_list
@@ -38,5 +34,12 @@ typedef struct s_contact_list
     int max_level;
     int nElement;
 }t_contact_list;
+
+char *scanString();
+t_contact* createContact(char *surname, char *firstname);
+void setPointer(t_contact *pContact, t_contact_list *pList, int i);
+void insertHeadContact(t_contact_list *contactList, t_contact *contact);
+void insertContact(t_contact_list *contactList, char *surname, char *firstname);
+t_contact_list createContactList();
 
 #endif //PROJECTL2_CONTACT_H

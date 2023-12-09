@@ -1,12 +1,24 @@
-#include <stdio.h>
-#include "set.h"
-#include <windows.h>
-#include "stdlib.h"
-#include "TimeTest.h"
+#include "contact.h"
+#include "stdio.h"
 
 int main() {
 
-    TimeTest(1,25000);
+    t_contact_list cList = createContactList();
+    char int_strSurname[5];
+    char int_strFirstname[5];
+    for(int surname = 0; surname<100; surname++){
+        sprintf(int_strSurname, "%d", surname);
+        insertContact(&cList, int_strSurname, int_strSurname);
+//        for(int firstname = 0; firstname<10; firstname++){
+//            sprintf(int_strFirstname, "%d", firstname);
+//            insertContact(&cList, int_strSurname, int_strFirstname);
+//        }
+    }
+    t_contact *ptr = cList.heads[0];
+    while(ptr != NULL){
+        printf("%s_%s\n", ptr->surname, ptr->firstname);
+        ptr = ptr->nexts[0];
+    }
 
 //    t_d_list tentTestList = createEmptyList(6);
 //    for(int num = 50; num>0; num--){
