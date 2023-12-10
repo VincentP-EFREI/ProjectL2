@@ -87,6 +87,7 @@ int simpleSearch(t_d_list list, int val){
 }
 
 int levelSearch(t_d_list list, int val){
+    if(list.heads[0] == NULL) return -1;
     if(val<list.heads[0]->value) return -1;
 
     int searchLvl = list.max_level-1;

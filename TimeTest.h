@@ -4,7 +4,7 @@
 
 #include "set.h"
 
-void TimeTest(int, int);
+double TimeTest(int, int, int, int);
 
 void saveTimedSimpleSearch(t_d_list testList, int valNumber);
 

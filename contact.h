@@ -16,7 +16,6 @@ typedef struct s_appointment
     char *purpose;
     t_time time;
     t_duration duration;
-    struct s_appointement *next;
 }t_appointement;
 
 typedef struct s_contact
@@ -35,11 +34,12 @@ typedef struct s_contact_list
     int nElement;
 }t_contact_list;
 
-char *scanString();
+t_appointement* createAppointement(t_duration dur, t_time time, char* purpose);
 t_contact* createContact(char *surname, char *firstname);
-void setPointer(t_contact *pContact, t_contact_list *pList, int i);
-void insertHeadContact(t_contact_list *contactList, t_contact *contact);
-void insertContact(t_contact_list *contactList, char *surname, char *firstname);
 t_contact_list createContactList();
+void insertContact(t_contact_list *contactList, char *surname, char *firstname);
+void rePointer(t_contact_list *cList, t_contact *verifPtr);
+t_contact *searchContact(t_contact_list *contactList, char *surname, char *firstname);
+int fillContact();
 
 #endif //PROJECTL2_CONTACT_H
